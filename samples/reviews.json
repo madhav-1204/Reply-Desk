@@ -1,0 +1,82 @@
+[
+  {
+    "id": "sample-1",
+    "businessType": "Bakery & Cafe",
+    "businessName": "Maple Street Bakery",
+    "stars": 5,
+    "sentiment": "positive",
+    "text": "The almond croissants here are absolute perfection. Crisp on the outside, flaky and buttery. Staff is always smiling even during the morning rush!"
+  },
+  {
+    "id": "sample-2",
+    "businessType": "Hair Salon",
+    "businessName": "Studio Chic Salon",
+    "stars": 5,
+    "sentiment": "positive",
+    "text": "Best balayage in the city! Maria listened carefully to what I wanted and gave great advice on hair care. The salon is spotless and welcoming."
+  },
+  {
+    "id": "sample-3",
+    "businessType": "Auto Repair",
+    "businessName": "Apex Auto Care",
+    "stars": 5,
+    "sentiment": "positive",
+    "text": "Honest mechanics are hard to find, but Apex diagnosed my brake issue in 15 minutes, showed me the worn pads, and charged exactly what was estimated."
+  },
+  {
+    "id": "sample-4",
+    "businessType": "Coffee Shop",
+    "businessName": "The Daily Roast",
+    "stars": 3,
+    "sentiment": "neutral",
+    "text": "The flat white was delicious, but seating is very limited and it was too loud to read a book. Would grab takeout again though."
+  },
+  {
+    "id": "sample-5",
+    "businessType": "Italian Restaurant",
+    "businessName": "Trattoria Bella",
+    "stars": 3,
+    "sentiment": "neutral",
+    "text": "Pasta was tasty and well-seasoned, but our main course arrived 45 minutes after the appetizers. Waiter was polite about the kitchen delay."
+  },
+  {
+    "id": "sample-6",
+    "businessType": "Dental Clinic",
+    "businessName": "Oakridge Family Dental",
+    "stars": 3,
+    "sentiment": "neutral",
+    "text": "Dr. Miller is gentle and thorough with cleanings. Only downside is the billing department took three weeks to process my insurance paperwork."
+  },
+  {
+    "id": "sample-7",
+    "businessType": "Bicycle Shop",
+    "businessName": "Chain Reaction Cycles",
+    "stars": 1,
+    "sentiment": "negative",
+    "text": "Brought my commuter bike in for a simple gear tune-up. Got it back two days late, the chain started slipping immediately on my ride home, and the tech was defensive."
+  },
+  {
+    "id": "sample-8",
+    "businessType": "Pizza & Diner",
+    "businessName": "Cornerstone Pizzeria",
+    "stars": 1,
+    "sentiment": "negative",
+    "text": "Ordered two large pizzas for a family birthday party. The driver delivered them completely cold and crushed on one side. When I called the store, the supervisor hung up on me."
+  },
+  {
+    "id": "sample-9",
+    "businessType": "Veterinary Clinic",
+    "businessName": "Paws & Whiskers Vet",
+    "stars": 2,
+    "sentiment": "negative",
+    "text": "We had an appointment at 2 PM for our cat's annual shots and sat in the waiting room for over an hour without any explanation or update from reception."
+  },
+  {
+    "id": "sample-10",
+    "businessType": "Plumbing Services",
+    "businessName": "Reliable Flow Plumbing",
+    "stars": 4,
+    "sentiment": "positive",
+    "text": "Technician arrived promptly within the scheduled window and fixed the leaking kitchen pipe quickly. Left the cabinet clean and dry. A bit pricey, but solid work."
+  }
+]
