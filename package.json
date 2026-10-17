@@ -1,0 +1,23 @@
+{
+  "name": "reply-desk",
+  "version": "1.0.0",
+  "description": "Paste a customer review. Get a ready-to-post reply in your voice. Runs on your own computer.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "keywords": [
+    "ollama",
+    "gemma3",
+    "local-ai",
+    "review-replies",
+    "hacktoberfest",
+    "small-business"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
