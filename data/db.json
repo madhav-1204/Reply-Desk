@@ -7,5 +7,16 @@
     "toneNotes": "Warm, sincere, casual. Never use excessive exclamation marks.",
     "neverSay": "Never promise refunds, discounts, or free items. Never admit legal liability."
   },
-  "history": []
+  "history": [
+    {
+      "id": "22da4a0c-c035-477a-b703-18d747dd06a4",
+      "createdAt": "2026-10-17T17:41:11.172Z",
+      "reviewText": "Best balayage in the city! Maria listened carefully to what I wanted and gave great advice on hair care. The salon is spotless and welcoming.",
+      "starRating": 5,
+      "sentiment": "positive",
+      "tone": "friendly",
+      "length": "short",
+      "replyText": "Thank you so much for your wonderful experience at Maple Street Bakery! We’re delighted you felt Maria listened carefully and offered such helpful advice.\n\nWarm regards,\nSarah & the Maple Street Team"
+    }
+  ]
 }
