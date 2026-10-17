@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reply Desk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <svg class="brand-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span class="brand-title">Reply Desk</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="reply" id="nav-reply">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Reply</span>
+        </button>
+        <button class="nav-item" data-view="history" id="nav-history">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M12 7v5l4 2"></path>
+          </svg>
+          <span>History</span>
+          <span class="history-badge" id="history-count">0</span>
+        </button>
+        <button class="nav-item" data-view="profile" id="nav-profile">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Business profile</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="status-dot" id="status-dot"></span>
+          <div class="status-details">
+            <span class="status-model" id="status-model">gemma3:1b</span>
+            <span class="status-text" id="status-text">Checking...</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Ollama Error Banner -->
+      <div class="alert-banner" id="ollama-alert" style="display: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="ollama-alert-msg">Could not reach Ollama. Start it with: ollama serve</span>
+      </div>
+
+      <!-- VIEW 1: Reply (Two Panes) -->
+      <section class="view-panel active" id="view-reply">
+        <header class="panel-header">
+          <h1 class="panel-title">Review reply</h1>
+          <div class="panel-actions">
+            <label for="sample-select" class="sample-label">Sample review:</label>
+            <select id="sample-select" class="sample-select">
+              <option value="">Load a sample review...</option>
+            </select>
+          </div>
+        </header>
+
+        <div class="two-pane-container">
+          <!-- Left Pane: Review Input & Settings -->
+          <div class="pane pane-left">
+            <div class="pane-header">
+              <label for="review-input" class="pane-label">Customer review</label>
+              <div class="star-rating-wrapper">
+                <span class="star-label">Rating:</span>
+                <div class="star-group" id="star-group" role="radiogroup" aria-label="Star rating">
+                  <button type="button" class="star-btn" data-star="1" title="1 star">★</button>
+                  <button type="button" class="star-btn" data-star="2" title="2 stars">★</button>
+                  <button type="button" class="star-btn" data-star="3" title="3 stars">★</button>
+                  <button type="button" class="star-btn" data-star="4" title="4 stars">★</button>
+                  <button type="button" class="star-btn" data-star="5" title="5 stars">★</button>
+                </div>
+                <button type="button" class="star-clear-btn" id="star-clear-btn" title="Clear rating" style="display: none;">✕</button>
+              </div>
+            </div>
+
+            <textarea id="review-input" class="text-area review-textarea" placeholder="Paste the customer review here..."></textarea>
+
+            <!-- Detected Sentiment & Override -->
+            <div class="sentiment-bar">
+              <div class="sentiment-display">
+                <span class="sentiment-prefix">Detected sentiment:</span>
+                <span class="sentiment-indicator" id="sentiment-indicator">
+                  <span class="sentiment-dot dot-neutral" id="sentiment-dot"></span>
+                  <span class="sentiment-name" id="sentiment-name">None</span>
+                </span>
+              </div>
+              <div class="sentiment-override">
+                <label for="sentiment-override-select" class="override-label">Override:</label>
+                <select id="sentiment-override-select" class="small-select">
+                  <option value="auto">Auto</option>
+                  <option value="positive">Positive</option>
+                  <option value="neutral">Neutral</option>
+                  <option value="negative">Negative</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Controls: Length & Tone -->
+            <div class="controls-grid">
+              <div class="control-group">
+                <label class="control-label">Length</label>
+                <div class="segmented-control" id="length-control">
+                  <button type="button" class="segment-btn active" data-value="short">Short</button>
+                  <button type="button" class="segment-btn" data-value="medium">Medium</button>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Tone</label>
+                <div class="segmented-control" id="tone-control">
+                  <button type="button" class="segment-btn active" data-value="friendly">Friendly</button>
+                  <button type="button" class="segment-btn" data-value="professional">Professional</button>
+                  <button type="button" class="segment-btn" data-value="apologetic">Apologetic</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-footer">
+              <button type="button" class="btn btn-primary" id="btn-generate">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+                <span>Generate reply</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-clear" title="Clear review text">
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Pane: Generated Reply -->
+          <div class="pane pane-right">
+            <div class="pane-header">
+              <label for="reply-output" class="pane-label">Generated reply</label>
+              <div class="reply-header-actions">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-regenerate" disabled>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                    <path d="M8 16H3v5"></path>
+                  </svg>
+                  <span>Regenerate</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-copy" disabled>
+                  <svg id="copy-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                  </svg>
+                  <span id="copy-text">Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="reply-wrapper">
+              <textarea id="reply-output" class="text-area reply-textarea" placeholder="Paste a customer review to get started."></textarea>
+              <div class="generating-overlay" id="generating-overlay" style="display: none;">
+                <span class="generating-spinner"></span>
+                <span class="generating-text">Generating reply...</span>
+              </div>
+            </div>
+
+            <div class="reply-footer-info">
+              <span class="footer-hint">Editable before copying. Automatically saved to history.</span>
+              <span class="reply-stats" id="reply-stats"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: History -->
+      <section class="view-panel" id="view-history">
+        <header class="panel-header">
+          <h1 class="panel-title">Reply history</h1>
+          <div class="search-wrapper">
+            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="history-search" class="search-input" placeholder="Search reviews or replies...">
+          </div>
+        </header>
+
+        <div class="history-container" id="history-list">
+          <div class="empty-state" id="history-empty">
+            <span>No past reviews recorded yet.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: Business Profile -->
+      <section class="view-panel" id="view-profile">
+        <header class="panel-header">
+          <h1 class="panel-title">Business profile</h1>
+        </header>
+
+        <div class="profile-container">
+          <p class="profile-intro">
+            These details shape every generated reply so it matches your business voice and stays consistent. Saved locally on this computer.
+          </p>
+
+          <form id="profile-form" class="profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prof-biz-name" class="form-label">Business name</label>
+                <input type="text" id="prof-biz-name" class="text-input" placeholder="e.g. Maple Street Bakery" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prof-biz-type" class="form-label">Type of business</label>
+                <input type="text" id="prof-biz-type" class="text-input" placeholder="e.g. Bakery and cafe" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prof-owner-name" class="form-label">Owner or manager name</label>
+                <input type="text" id="prof-owner-name" class="text-input" placeholder="e.g. Sarah Jenkins" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prof-signoff" class="form-label">Preferred sign-off</label>
+                <textarea id="prof-signoff" class="text-area form-textarea-small" placeholder="e.g. Warm regards,&#10;Sarah &amp; the Maple Street Team" rows="2" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prof-tone-notes" class="form-label">Tone notes</label>
+              <textarea id="prof-tone-notes" class="text-area form-textarea-small" placeholder="e.g. Casual, warm, concise. Never use excessive exclamation marks." rows="2"></textarea>
+              <span class="field-help">Style guidelines followed by the AI when crafting replies.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="prof-never-say" class="form-label">Things to never say</label>
+              <textarea id="prof-never-say" class="text-area form-textarea-small" placeholder="e.g. Never promise refunds, discounts, or free items. Never admit legal liability." rows="2"></textarea>
+              <span class="field-help">Strict negative constraints included in every prompt.</span>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="btn-save-profile">
+                Save profile
+              </button>
+              <span class="save-status" id="profile-save-status"></span>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
